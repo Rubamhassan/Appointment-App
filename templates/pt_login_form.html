@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="well spaced" style="width:40%;">
+<div>
+	<h1>New Patient Registration Form </h1>
+	<form action="/pregister" method="POST">
+
+		<div class="new_pt">
+			<label> First Name:
+				<input type="first_name" name="first_name" required class="new_pt">
+			</label>
+		</div>
+		<div class="new_pt">
+			<label> Last Name:
+				<input type="last_name" name="last_name" required class="new_pt">
+			</label>
+		</div>
+		<div class="new_pt">
+			<label> Date Of Birth:
+				<input type="date_of_birth" name="date_of_birth" required class="date_of_birth">
+			</label>
+		</div>
+		<div class="new_pt">
+			<label> Cell Phone Number:
+				<input type="cell_phone_number" name="cell_phone_number" required class="cell_phone_number">
+			</label>
+		</div>
+		<div class="new_pt">
+			<label> User Name:
+				<input type="user_name" name="user_name" required class="user_name">
+			</label>
+		</div>
+		<div class="new_pt">
+			<label> Password:
+				<input type="password" name="password" required class="password">
+			</label>
+		</div>
+		<input type="submit">
+	</form>
+</div>
+<div>
+	<h1> Existing Patient Login</h1>
+	<form action="/login" method="POST">
+		<div class="existing_pt">
+			<label>User ID:
+				<input type="user_id" name="user_id" required class="existing_pt">
+			</label>
+		</div>
+		<div class="existing_pt">
+			<label>Password:
+				<input type="password" name="password" required class="existing_pt">
+			</label>
+		</div>
+		<input type="submit">
+	</form>
+
+</div>
+{% endblock %}
+
+

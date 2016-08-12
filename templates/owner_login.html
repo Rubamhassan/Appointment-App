@@ -1,0 +1,42 @@
+{% extends 'base.html'%}
+{% block content %}
+<div class="well spaced" style="width: 40%">
+<div>
+	<h1>Provider Login</h1>
+	<form action="/owner_login" method="POST">
+
+		<div class="provider_login">
+			<label>First Name:
+				<input type="first_name" name="first_name" required class="provider_login">
+			</label>
+		</div>
+		<div class="provider_login">
+			<label>Last Name:
+				<input type="last_name" name="last_name" required class="provider_login">
+			</label>
+		</div>
+		<div class="provider_login">
+			<label>License Number:
+				<input type="license_number" name="license_number" required class="provider_login">
+			</label>
+		</div>
+		<div class="provider_login">
+			<label>Office Address:
+				<input type="office_address" name="office_address" required class="provider_login">
+			</label>
+		</div>
+		<div class="provider_login">
+			<label>Office Phone Number:
+				<input type="office_phone_number" name="office_phone_number" required class="provider_login">
+			</label>
+		</div>
+		<div class="provider_login">
+			<label>Provider ID:
+				<input type="provider_id" name="provider_id" required class="provider_login">
+			</label>
+		</div>
+		<input type="submit">
+	</form>
+</div>
+</div>
+{% endblock %}
