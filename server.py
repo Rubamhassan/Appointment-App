@@ -1,7 +1,7 @@
 """ Appointment Scheduling and Confirmation""" 
 
 from jinja2 import StrictUndefined
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, session
 from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db,db
 from database_functions import create_new_pt, create_new_appt, create_appt_type, create_new_owner
@@ -45,6 +45,8 @@ def login_process():
 							user_name=user_name,
 							password=password)
 
+	session['first_name'] = first_name 
+
 	# #this part might need to change. Need to figure out how to add a pt into the database
 	if not patient:
 		flash("Please complete the new patient form!")
@@ -55,7 +57,10 @@ def login_process():
 		return redirect ("/login")
 # query the appt table for times that are today. 
 #look at ratigs 
-	return render_template("appt_book.html")
+	day="01"
+	year="2016"
+	month="August"
+	return render_template("appt_book.html", day=day, year=year, month=month)
 
 @app.route('/reviews', methods=['GET'])
 def show_review_page():
@@ -93,12 +98,61 @@ def owner_login_process():
 
 	return render_template("appt_book.html")
 
-@app.route ('/appt_book', methods=['GET'])
-def appt_book_view():
+@app.route ('/appt_book/<year>/<month>/<day>', methods=['GET'])
+def show_appt_book(year,month,day,first_name):
+	"""This will take the pts name and show the appt book"""
+	first_name= request.args.post('first_name')
+
+	return render_template ("appt_book.html", year=year, month=month, day=day, first_name=first_name)
+
+
+@app.route ('/appt_book/<year>/<month>/<day>', methods=['POST'])
+def appt_book_view(year,month,day):
 	"""Appointment book view"""
+	time_now= datetime.now()
+	td= timedelta(1)
+	first_available_day = time_now + td 
+	weekdays= [Monday, Tuesday, Wednesday, Thursday,]
+	if day in weekdays:
+		first_available_day= time_now +td
+	else: 
+		first_available_day= time_now +timedelta(3)
+		#get a code review for the above!!
+	
+	day="01"
+	year="2016"
+	month="August"
+	#need the date, need to show all appts, need tp pass the day to the template. 
+	appointments = {}
+	# 	8: {
+	# 		# user_id:
+	# 		'first_name': 'Ruba',
+	# 		'last_name': 'Hassan',
+	# 		'appt_type': 'surgery',
+	# 		'cost': 2000
+	# 	},
+	# 	14: {
+	# 		# user_id:
+	# 		'first_name': 'Kevin',
+	# 		'last_name': 'Gao',
+	# 		'appt_type': 'consultation',
+	# 		'cost': 500
+	# 	}
+	# }
+	# date = datetime.date(year, month, date)
+	# today = datetime.now()
+	# if today is dayof
+ #need to pass in the day,month, year that come after the user logs in. This will only allow the user to make an appt for a day after they make the acct NOT same day. 
+	return render_template("appt_book.html", year=year, month=month, day=day, appointments=appointments)
 
-	return render_template("appt_book.html")
+@app.route ('/confirm_appt', methods=['POST'])
+def conf_appt():
+	""" Need to send user to another page after appt has been confirmed"""
 
+	appt_time = request.form.get('appt_time')
+	first_name = session['first_name']
+	
+	return render_template("confirmation_page.html", first_name=first_name, appt_time=appt_time)
 if __name__ == "__main__":
 	
     app.debug = True
