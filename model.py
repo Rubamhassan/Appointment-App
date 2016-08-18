@@ -38,7 +38,7 @@ class Appointment(db.Model):
 	appt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
 	appt_time = db.Column(db.String, nullable=False)
-	# appt_date = db.Column(db.Integer, nullable=False)
+	#appt_date = db.Column(db.Integer, nullable=False)
 	appt_type_id = db.Column(db.Integer, db.ForeignKey('appointment_type.appt_type_id'), nullable=False)
 	provider_id = db.Column(db.Integer,db.ForeignKey('Business_owner.provider_id'),nullable=False )
 

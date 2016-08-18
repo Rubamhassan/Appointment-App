@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, session, flash, redirect
 from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db,db, Patient
+from model import connect_to_db,db, Patient,Appointment, AppointmentType, BusinessOwner
 from database_functions import create_new_pt, create_new_appt, create_appt_type, create_new_owner
 from datetime import datetime,timedelta
 app = Flask(__name__)
@@ -68,32 +68,46 @@ def login_process():
 	
 	return render_template("appt_book.html", day=day, year=year, month=month)
 
-@app.route('/login', methods=['GET'])
+@app.route('/existing_user_login', methods=['GET'])
+def show_options_for_user():
+	""" show existing user a page to choose from two options"""
+	
+	user_name=request.args.get('user_name')
+	password= request.args.get('password')
+	
+	session['user_name']= user_name
+	
+	patient= Patient.query.filter_by(user_name=user_name).first
+
+	return redirect('existing_user_page.html')
+
+@app.route('/login', methods=['POST'])
 def show_appts_scheduled_for_this_pt():
 	""" show the user all the appointments that he/she has scheduled"""
-	print "I got into the login route,yeah"
 	
-	user_name= request.args.get('user_name')
-	password=request.args.get('password')
+	user_name= request.form.get('user_name')
+	password=request.form.get('password')
 	
-	print "user name is:", user_name
 	patient = Patient.query.filter_by(user_name=user_name).first()
+	# patient_id= patient.user_id
+
+	# all_appts = Appointment.query.filter_by(user_id=patient_id).all()
+	# print all_appts
+
 	if patient.password == password:
 		session['user_name']= user_name
-		print "user exsit"
 
-		render_template("confirmed.html")
+		return render_template("existing_user_page.html", user_name=patient.user_name)
 	else:
-		print "nope, no user "
 		flash("Please enter the correct password!")
-		return redirect ('/plogin')
+		return redirect ('plogin')
 
 
 @app.route('/reviews/', methods=['GET'])
 def show_review_page():
 	"""Display reviews page"""
 
-	return render_template("reviews.html")
+	return render_template("eviews.html")
 
 @app.route('/owner_login', methods=['GET'])
 def owner_page():
@@ -125,12 +139,15 @@ def owner_login_process():
 
 	return render_template("appt_book.html")
 
-@app.route ('/appt_book/<year>/<month>/<day>', methods=['GET'])
-def show_appt_book(year,month,day,first_name):
+@app.route ('/appt_book', methods=['GET'])
+def show_appt_book():
 	"""This will take the pts name and show the appt book"""
-	first_name= request.args.post('first_name')
+	first_name= request.args.get('first_name')
+	year="2016"
+	month="August"
+	day="1"
 
-	return render_template ("appt_book.html", year=year, month=month, day=day, first_name=first_name)
+	return render_template ("appt_book.html", first_name=first_name, day=day, year=year, month=month)
 
 
 @app.route ('/appt_book/<year>/<month>/<day>', methods=['POST'])
@@ -154,31 +171,17 @@ def appt_book_view(year,month,day):
 	print month 
 	print year
 	appointments = {}
-	# 	8: {
-	# 		# user_id:
-	# 		'first_name': 'Ruba',
-	# 		'last_name': 'Hassan',
-	# 		'appt_type': 'surgery',
-	# 		'cost': 2000
-	# 	},
-	# 	14: {
-	# 		# user_id:
-	# 		'first_name': 'Kevin',
-	# 		'last_name': 'Gao',
-	# 		'appt_type': 'consultation',
-	# 		'cost': 500
-	# 	}
-	# }
+
 	return render_template("appt_book.html", year=year, month=month, day=day, appointments=appointments)
 
-@app.route ('/confirm_appt', methods=['POST'])
+@app.route ('/confirm_appt', methods=['GET'])
 def conf_appt():
 	""" Need to send user to another page after appt has been confirmed"""
 
-	appt_time = request.form.get('appt_time')
+	appt_time = request.args.get('appt_time')
 	first_name = session['first_name']
 	
-	return render_template("confirmation_page.html", first_name=first_name, appt_time=appt_time)
+	return render_template("confirmed.html")
 if __name__ == "__main__":
 	
     app.debug = True
