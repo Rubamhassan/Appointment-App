@@ -98,8 +98,8 @@ def show_appts_scheduled_for_this_pt():
 	# print all_appts
 
 	if patient.password == password:
-		session['user_name']= user_name
-		session['first_name']= first_name
+		user_id= patient.user_id
+		session['user_id']= user_id
 
 		return render_template("existing_user_page.html", first_name=first_name)
 	else:
@@ -196,6 +196,17 @@ def appt_book_view(year,month,day):
 
 	return render_template("appt_book.html", year=year, month=month, day=day, appointments=appointments)
 
+@app.route ('/confirm_appt', methods=['GET'])
+def show_scheduled_appts():
+	""" Display page to show what is scheduled for this user"""
+	user_id= session.get('user_id')
+	patient = Patient.query.filter_by(user_id=user_id).first()
+	first_name = patient.first_name
+	appointments= Appointment.query.filter_by(user_id=user_id).all()
+	
+
+	return render_template("/confirmed.html",first_name=first_name,appointments=appointments)
+
 @app.route ('/confirm_appt', methods=['POST'])
 def conf_appt():
 	""" Need to send user to another page after appt has been confirmed"""
@@ -219,7 +230,7 @@ def conf_appt():
 
 	return render_template("confirmed.html",first_name=first_name, appointments=appointments)
 
-# TODO: Make /confirm_appt route for get - this shows all appointments for user
+# TODO: Make /confirm_appt route for [get] - this shows all appointments for user
 
 if __name__ == "__main__":
 	
