@@ -1,23 +1,58 @@
 {% extends "base.html" %}
 {% block content %}
 
-{{ day }} {{ month }} {{ year }}
+
 
 <form action='/confirm_appt' method='POST'>
-  <h1>Bay Area Oral & Maxillofacial Surgery </h1>
-  <h2>450 Sutter Suite#1001</h2>
-  <h3>San Francisco Ca 94109</h3>
-  <h4>(415)771-2918</h4>
-  <input type='radio' name= 'appt_time' value='8:00am'> 8:00am
-  <text> 
-  <input type='radio' name= 'appt_time' value='9:00am'> 9:00am
-  <input type='radio' name= 'appt_time' value='10:00am'> 10:00am
-  <input type='radio' name= 'appt_time' value='11:00am'> 11:00am
-  <input type='radio' name= 'appt_time' value='1:00pm'> 1:00pm
-  <input type='radio' name= 'appt_time' value='2:00pm'> 2:00pm
-  <input type='radio' name= 'appt_time' value='3:00pm'> 3:00pm
-  <input type='radio' name= 'appt_time' value='4:00pm'> 4:00pm
-  <input type='radio' name= 'appt_time' value='5:00pm'> 5:00pm
+  <h1>{{ month }} {{ day }} {{ year }}</h1>
+  <h2>Bay Area Oral & Maxillofacial Surgery </h2>
+  <h3>450 Sutter Suite#1001</h3>
+  <h4>San Francisco Ca 94109</h4>
+  <h5>(415)771-2918</h5>
+             <h6>Please select your appointment time:</h6>
+             <h7>Appointments for 1</h7>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 8:00am'> 8:00am</input>
+  <br> 
+  <input type='radio' name= 'appt_time' value='1, 9:00am'> 9:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 10:00am'> 10:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 11:00am'> 11:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 1:00pm'> 1:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 2:00pm'> 2:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 3:00pm'> 3:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 4:00pm'> 4:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='1, 5:00pm'> 5:00pm</input>
+  <br>
+  <input type="submit" class="textbox">
+  <br>
+  
+  <h8>Appointments for 2</h8>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 8:00am'> 8:00am</input>
+  <br> 
+  <input type='radio' name= 'appt_time' value='2, 9:00am'> 9:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 10:00am'> 10:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 11:00am'> 11:00am</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 1:00pm'> 1:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 2:00pm'> 2:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 3:00pm'> 3:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 4:00pm'> 4:00pm</input>
+  <br>
+  <input type='radio' name= 'appt_time' value='2, 5:00pm'> 5:00pm</input>
+  <br>
   <input type="submit" class="textbox">
 </form>
 {% endblock %}

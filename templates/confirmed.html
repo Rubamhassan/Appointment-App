@@ -1,4 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
-Here is a list of your scheduled appointments
+                    Hello {{ first_name }}!
+                    Here is a list of your scheduled appointments:
+                    
+                    <ul>
+ 					 {% for appointment in appointments %}
+    				<li>{{ appointment.appt_time }}</li>
+  					{% endfor %}
+					</ul>
 {% endblock %}
+
+
+loop over the appt list and show the appts

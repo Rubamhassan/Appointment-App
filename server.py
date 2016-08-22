@@ -49,7 +49,7 @@ def login_process():
 	session['first_name'] = first_name 
 
 	db.session.add(patient)
-	db.commit()
+	db.session.commit()
 
 	time_now= datetime.now()
 	td= timedelta(1)
@@ -87,8 +87,11 @@ def show_appts_scheduled_for_this_pt():
 	
 	user_name= request.form.get('user_name')
 	password=request.form.get('password')
-	
+	print user_name
 	patient = Patient.query.filter_by(user_name=user_name).first()
+	print patient
+	first_name = patient.first_name
+	
 	# patient_id= patient.user_id
 
 	# all_appts = Appointment.query.filter_by(user_id=patient_id).all()
@@ -96,8 +99,9 @@ def show_appts_scheduled_for_this_pt():
 
 	if patient.password == password:
 		session['user_name']= user_name
+		session['first_name']= first_name
 
-		return render_template("existing_user_page.html", user_name=patient.user_name)
+		return render_template("existing_user_page.html", first_name=first_name)
 	else:
 		flash("Please enter the correct password!")
 		return redirect ('plogin')
@@ -143,9 +147,27 @@ def owner_login_process():
 def show_appt_book():
 	"""This will take the pts name and show the appt book"""
 	first_name= request.args.get('first_name')
-	year="2016"
-	month="August"
-	day="1"
+	# year="2016"
+	# month="August"
+	# day="1"
+	time_now= datetime.now()
+	td= timedelta(1)
+
+	first_available_day = time_now + td 
+	weekdays= ['Monday','Tuesday','Wednesday','Thursday',]
+	for day in weekdays:
+		if day in weekdays:
+			first_available_day= time_now +td
+		else: 
+			first_available_day= time_now +timedelta(3)
+		#get a code review for the above!!
+	day=first_available_day.day
+	month=first_available_day.month
+	year=first_available_day.year
+	print day 
+	print month 
+	print year
+	appointments = {}
 
 	return render_template ("appt_book.html", first_name=first_name, day=day, year=year, month=month)
 
@@ -174,14 +196,31 @@ def appt_book_view(year,month,day):
 
 	return render_template("appt_book.html", year=year, month=month, day=day, appointments=appointments)
 
-@app.route ('/confirm_appt', methods=['GET'])
+@app.route ('/confirm_appt', methods=['POST'])
 def conf_appt():
 	""" Need to send user to another page after appt has been confirmed"""
 
-	appt_time = request.args.get('appt_time')
+	appt_time = request.form.get('appt_time')
+	provider_id, time = appt_time.split(", ")
 	first_name = session['first_name']
+
+	patient = Patient.query.filter_by(first_name=first_name).first()
+	user_id =patient.user_id 
 	
-	return render_template("confirmed.html")
+	created_appt= create_new_appt(user_id=user_id,
+							appt_type_id=1,
+							appt_time=time,
+							provider_id=provider_id)
+	
+	db.session.add(created_appt)
+	db.session.commit()
+
+	appointments= Appointment.query.filter_by(user_id=user_id).all()
+
+	return render_template("confirmed.html",first_name=first_name, appointments=appointments)
+
+# TODO: Make /confirm_appt route for get - this shows all appointments for user
+
 if __name__ == "__main__":
 	
     app.debug = True

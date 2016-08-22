@@ -50,12 +50,29 @@ def create_appointment():
 	
 def create_provider():
 	"""adding the provider in"""
+	with open('./seed_data/drs.tsv','r+') as data:
+		for i, row in enumerate(data):
+			row = row.rstrip()
+			print row.split(",")
+			last_name, first_name,license_number,office_address,office_phone_number= row.split(",")
+			
+			provider=BusinessOwner(
+				last_name=last_name,
+				first_name=first_name,
+				license_number=license_number,
+				office_address=office_address,
+				office_phone_number=office_phone_number)
+			db.session.add(provider)
+			db.session.commit()
+
 
 
 if __name__ == '__main__':
 	load_pts()
 
 	create_appointment()
+
+	create_provider()
 
 # create_new_pt('ruba', 'hansan', '10101977', 6503012211, 'rubmnbhassan', '123456')
 # ruba = Patient.query.filter_by(first_name='ruba').first()

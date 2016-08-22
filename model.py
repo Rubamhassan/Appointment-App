@@ -21,8 +21,8 @@ class Patient(db.Model):
 class BusinessOwner(db.Model):
 	"""Business owner info"""
 
-	__tablename__ = "Business_owner"
-
+	__tablename__ = "business_owner"
+#need to make provider ID autoincremenet=True
 	provider_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	first_name = db.Column(db.String(64), nullable=False)
 	last_name = db.Column(db.String(64), nullable=False)
@@ -38,16 +38,16 @@ class Appointment(db.Model):
 	appt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
 	appt_time = db.Column(db.String, nullable=False)
-	#appt_date = db.Column(db.Integer, nullable=False)
+	# appt_date = db.Column(db.Integer, nullable=False)
 	appt_type_id = db.Column(db.Integer, db.ForeignKey('appointment_type.appt_type_id'), nullable=False)
-	provider_id = db.Column(db.Integer,db.ForeignKey('Business_owner.provider_id'),nullable=False )
+	provider_id = db.Column(db.Integer,db.ForeignKey('business_owner.provider_id'),nullable=False )
 
 class AppointmentType(db.Model):
 	"""Two different appointment types"""
 
 	__tablename__ = "appointment_type"
-
-	appt_type_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+ #do we need to make this autoincrement?
+	appt_type_id = db.Column(db.Integer, primary_key=True)
 	appt_type = db.Column(db.String, nullable=False)
 	cost = db.Column(db.Integer, nullable=False)
 
