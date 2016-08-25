@@ -5,7 +5,7 @@
                     
                     <ul>
  					 {% for appointment in appointments %}
-    				<li>{{ appointment.appt_time }}</li>
+    				<li>{{ appointment.appt_time }} {{ appointment.appt_date}}</li>
   					{% endfor %}
 					</ul>
 {% endblock %}

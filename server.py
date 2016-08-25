@@ -81,6 +81,17 @@ def show_options_for_user():
 
 	return redirect('existing_user_page.html')
 
+@app.route('/owner_login', methods=['POST'])
+def show_appt_book_to_owner():
+	"""Display the appointments scheduled for the owner to see"""
+	time_now= datetime.now()
+	day= time_now.day
+	month= time_now.month
+	year= time_now.year 
+
+
+	return render_template("appt_book.html", day=day, year=year, month=month)
+
 @app.route('/login', methods=['POST'])
 def show_appts_scheduled_for_this_pt():
 	""" show the user all the appointments that he/she has scheduled"""
@@ -177,7 +188,8 @@ def appt_book_view(year,month,day):
 	"""Appointment book view"""
 	time_now= datetime.now()
 	td= timedelta(1)
-
+	first_name= request.args.form('first_name')
+	print user_id
 	first_available_day = time_now + td 
 	weekdays= [Monday, Tuesday, Wednesday, Thursday,]
 	for day in weekdays:
@@ -193,15 +205,29 @@ def appt_book_view(year,month,day):
 	print month 
 	print year
 	appointments = {}
+	session[first_available_day]= first_available_day
 
-	return render_template("appt_book.html", year=year, month=month, day=day, appointments=appointments)
+	return render_template("appt_book.html",first_name=first_name, year=year, month=month, day=day, appointments=appointments)
+
+# @app.template_filter('MyCustomDateFormat') 
+# def format_date(appt_time):
+# 	"""Turn our date integer into a datetime object"""
+# 	#%d=monday %B=August %Y=Year
+# 	date = datetime.strptime(appt_time, "%I:%M%p")
+# 	output_format = "%B %d %Y" 
+
+# 	return datetime.strptime(date, output_format)
+
+
 
 @app.route ('/confirm_appt', methods=['GET'])
 def show_scheduled_appts():
 	""" Display page to show what is scheduled for this user"""
-	user_id= session.get('user_id')
+	user_id= session['user_id']
 	patient = Patient.query.filter_by(user_id=user_id).first()
+	print patient
 	first_name = patient.first_name
+
 	appointments= Appointment.query.filter_by(user_id=user_id).all()
 	
 
@@ -210,25 +236,34 @@ def show_scheduled_appts():
 @app.route ('/confirm_appt', methods=['POST'])
 def conf_appt():
 	""" Need to send user to another page after appt has been confirmed"""
-
+	day= request.form.get('day')
+	month= request.form.get('month')
+	year= request.form.get('year')
+	appt_date="%s/%s/%s"%(month,day,year)
+	user=session['user_id']
+	#this is how you you use something thats saved in a session! 
 	appt_time = request.form.get('appt_time')
 	provider_id, time = appt_time.split(", ")
-	first_name = session['first_name']
-
-	patient = Patient.query.filter_by(first_name=first_name).first()
-	user_id =patient.user_id 
+	# session['user_id']= user_id this didnt work!
 	
+	
+	patient = Patient.query.filter_by(user_id=user).first()
+	print patient
+	user_id =patient.user_id 
+	first_name=patient.first_name
+	print appt_date
 	created_appt= create_new_appt(user_id=user_id,
 							appt_type_id=1,
 							appt_time=time,
-							provider_id=provider_id)
+							provider_id=provider_id,
+							appt_date=appt_date)
 	
 	db.session.add(created_appt)
 	db.session.commit()
 
 	appointments= Appointment.query.filter_by(user_id=user_id).all()
 
-	return render_template("confirmed.html",first_name=first_name, appointments=appointments)
+	return render_template("confirmed.html",patient=patient,first_name=first_name,appointments=appointments)
 
 # TODO: Make /confirm_appt route for [get] - this shows all appointments for user
 

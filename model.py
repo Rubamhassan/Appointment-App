@@ -1,6 +1,7 @@
 """Models and database functions for my app"""
 
 from flask_sqlalchemy import SQLAlchemy
+# from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
 
@@ -9,7 +10,6 @@ class Patient(db.Model):
 
 	__tablename__ = "patient"
 
-
 	user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	first_name = db.Column(db.String(64), nullable=False)
 	last_name = db.Column(db.String(64), nullable=False)
@@ -17,6 +17,8 @@ class Patient(db.Model):
 	cell_phone_number = db.Column(db.String(64), nullable=False)
 	user_name = db.Column(db.String(64), nullable=False)
 	password = db.Column(db.String(64), nullable=False)
+
+	appointments = db.relationship("Appointment")
 
 class BusinessOwner(db.Model):
 	"""Business owner info"""
@@ -38,7 +40,7 @@ class Appointment(db.Model):
 	appt_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	user_id = db.Column(db.Integer, db.ForeignKey('patient.user_id'), nullable=False)
 	appt_time = db.Column(db.String, nullable=False)
-	# appt_date = db.Column(db.Integer, nullable=False)
+	appt_date = db.Column(db.String, nullable=False)
 	appt_type_id = db.Column(db.Integer, db.ForeignKey('appointment_type.appt_type_id'), nullable=False)
 	provider_id = db.Column(db.Integer,db.ForeignKey('business_owner.provider_id'),nullable=False )
 

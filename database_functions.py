@@ -21,9 +21,9 @@ def create_new_pt(first_name,
 
 	return patient
 
-def create_new_appt(user_id,appt_type_id,appt_time,provider_id):
+def create_new_appt(user_id,appt_type_id,appt_time,provider_id,appt_date):
 	"""This function is to create a new appointment"""
-	new_appt = Appointment(user_id=user_id, appt_type_id=appt_type_id,appt_time=appt_time, provider_id= provider_id)
+	new_appt = Appointment(user_id=user_id, appt_type_id=appt_type_id,appt_time=appt_time, provider_id= provider_id, appt_date=appt_date)
 	db.session.add(new_appt)
 	db.session.commit()
 	return new_appt

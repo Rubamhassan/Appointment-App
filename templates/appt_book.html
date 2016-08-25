@@ -1,16 +1,159 @@
-{% extends "base.html" %}
-{% block content %}
+<!-- {% extends "base.html" %}
+{% block content %} -->
+<head>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script type="text/javascript">
+var month= "{{month}}"
+var day= "{{day}}"
+var year="{{year}}"
+</script>
+
+</head>
+  <style>
+    td,th {
+        text-align:center;
+        }
+
+  </style>
+  <div align="center">
+  <span style="display:inline-block"> 
+    <button onclick="prev()"> Prev
+    </button>
+    <h1 id="displayDate">{{ month }} {{ day }} {{ year }}</h1>
+    <button onclick="next()"> Next
+    </button>
+  </span>
+  <h2>Bay Area Oral & Maxillofacial Surgery </h2>
+  <h3>450 Sutter Suite#1001</h3>
+  <h4>San Francisco Ca 94109</h4>
+  <h5>(415)771-2918</h5>
+             
+             
+  </div>
+<div class="row">
+  <div class="col-md-6">
+    <table class="table table-bordered">
+      <tr>
+        <th> 
+        Time
+        </th>
+        <th>
+        Dr. John
+        </th>
+        <!-- <th>
+        Dr.Steven
+        </th> -->
+      </tr>
+      <tr>
+        <td > 8:00</td>
+        <td > available</td>
+      </tr>
+      <tr>
+        <td> 9:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 10:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 11:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td bgcolor="lightgrey"> 12:00</td>
+        <td bgcolor="lightgrey"> Lunch</td>
+      </tr>
+      <tr>
+        <td> 1:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 2:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 3:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 4:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 5:00</td>
+        <td> available</td>
+      </tr>
+    </table>
+  </div>
+  <div class="col-md-6">
+    <table class="table table-bordered">
+      <tr>
+        <th> 
+        Time
+        </th>
+        <th>
+        Dr. Steven
+        </th>
+        <!-- <th>
+        Dr.Steven
+        </th> -->
+      </tr>
+      <tr>
+        <td> 8:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 9:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 10:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 11:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td bgcolor="lightgrey"> 12:00</td>
+        <td bgcolor="lightgrey"> Lunch</td>
+      </tr>
+      <tr>
+        <td> 1:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 2:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 3:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 4:00</td>
+        <td> available</td>
+      </tr>
+      <tr>
+        <td> 5:00</td>
+        <td> available</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<script type="text/javascript" src="/static/appt_book.js"></script>
 
 
-
-<form action='/confirm_appt' method='POST'>
-  <h1>{{ month }} {{ day }} {{ year }}</h1>
+<!-- <form action='/confirm_appt' method='POST'> -->
+  <!-- <h1>{{ month }} {{ day }} {{ year }}</h1>
   <h2>Bay Area Oral & Maxillofacial Surgery </h2>
   <h3>450 Sutter Suite#1001</h3>
   <h4>San Francisco Ca 94109</h4>
   <h5>(415)771-2918</h5>
              <h6>Please select your appointment time:</h6>
-             <h7>Appointments for 1</h7>
+             <h7>Appointments for Dr. John</h7> -->
+  <!-- <table class="table table-striped">
   <br>
   <input type='radio' name= 'appt_time' value='1, 8:00am'> 8:00am</input>
   <br> 
@@ -30,10 +173,22 @@
   <br>
   <input type='radio' name= 'appt_time' value='1, 5:00pm'> 5:00pm</input>
   <br>
+  <div class="hidden">
+  <select name="month">
+      <option value="{{month}}">{{month}}</option>
+  </select>
+  <select name="day">
+      <option value="{{day}}">{{day}}</option>
+  </select>
+  <select name="year">
+      <option value="{{year}}">{{year}}</option>
+  </select>
+  </div>
   <input type="submit" class="textbox">
   <br>
-  
-  <h8>Appointments for 2</h8>
+  </table>
+   
+  <h8>Appointments for Dr. Steven </h8>
   <br>
   <input type='radio' name= 'appt_time' value='2, 8:00am'> 8:00am</input>
   <br> 
@@ -53,6 +208,18 @@
   <br>
   <input type='radio' name= 'appt_time' value='2, 5:00pm'> 5:00pm</input>
   <br>
+  <div class="hidden">
+  <select name="month">
+      <option value="{{month}}">{{month}}</option>
+  </select>
+  <select name="day">
+      <option value="{{day}}">{{day}}</option>
+  </select>
+  <select name="year">
+      <option value="{{year}}">{{year}}</option>
+  </select>
+  </div>
   <input type="submit" class="textbox">
-</form>
+</form> -->
+
 {% endblock %}
