@@ -44,6 +44,9 @@ class Appointment(db.Model):
 	appt_type_id = db.Column(db.Integer, db.ForeignKey('appointment_type.appt_type_id'), nullable=False)
 	provider_id = db.Column(db.Integer,db.ForeignKey('business_owner.provider_id'),nullable=False )
 
+	def as_dict(self):
+		return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
 class AppointmentType(db.Model):
 	"""Two different appointment types"""
 

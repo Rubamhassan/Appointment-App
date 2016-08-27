@@ -1,21 +1,49 @@
 {% extends "base.html" %}
 {% block content %}
 	<!-- <link rel="stylesheet" href="./style.css"> -->
-					<h1>Bay Area Oral & Maxillofacial Surgery </h1>
-					<h2> Serving San Francisco for over 20 years!</h2>
-	<a href="/fill this in"> <button type="button"class="btn-lg btn-primary"> About Us</button></a>
-	<br>
-
-	<a href="/fill this in"> <button class="btn-lg btn-primary"> Procedures</button></a>
-	<br>
-
-	<a href="/reviews"> <button class="btn-lg btn-primary"> Reviews</button></a>
-	<br>
-
-	<a href="/plogin"> <button class="btn btn-lg btn-primary"> Patient Login</button></a>
-	<br>
-
-	<a href="/owner_login"> <button class="btn btn-lg btn-primary"> Provider Login</button></a>
+	<div align="center">
+		<h1>Bay Area Oral & Maxillofacial Surgery </h1>
+		<h2> Serving San Francisco for over 20 years!</h2>
+	</div>
+	<div>
+	<div class="col-sm-1"> </div>
+	<div class="col-sm-2">
+	<a href=""> <button type="button"class="btn-lg btn-block btn-primary"> About Us</button></a>
+	</div>
+	<div class="col-sm-2">
+	<a href=""> <button class="btn-lg btn-block btn-primary"> Procedures</button></a>
+	</div>
+	<div class="col-sm-2">
+	<a href="/reviews"> <button class="btn-lg btn-block btn-primary"> Reviews</button></a>
+	</div>
+	<div class="col-sm-2">
+	<a href="/plogin"> <button class="btn btn-lg btn-block btn-primary"> Patient Login</button></a>
+	</div>
+	<div class="col-sm-2">
+	<a href="/owner_login"> <button class="btn btn-lg btn-block btn-primary"> Provider Login</button></a>
+	</div>
+	<div class="col-sm-1"> </div>
+	
+	</div>
+<br>
+<br>
+<br>
+<div class="row">
+	<div class="col-sm-3">
+	  <img style="border-radius:50px" src="/static/Dr1.JPG" height="350" width="100%"></img>
+	</div>
+	<div class="col-sm-6"> 
+	  <img style="border-radius:50px"src="/static/GGateBridge.jpg" height="350" width="100%"></img>
+	</div>
+	<div class="col-sm-3">
+	  <img style="border-radius:50px"src="/static/D2.JPG" height="350" width="100%"></img>
+	</div>
+</div>
+<br>
+<br>
+<div align="center">
+  <pre> 450 Sutter Suite#1001, San Francisco Ca 94109 (415)771-2918</pre>
+</div>
 
 {% endblock %}
 

@@ -6,6 +6,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from model import connect_to_db,db, Patient,Appointment, AppointmentType, BusinessOwner
 from database_functions import create_new_pt, create_new_appt, create_appt_type, create_new_owner
 from datetime import datetime,timedelta
+import json
 app = Flask(__name__)
 
 app.secret_key = "ABC"
@@ -66,7 +67,8 @@ def login_process():
 	month=first_available_day.month
 	year=first_available_day.year
 	
-	return render_template("appt_book.html", day=day, year=year, month=month)
+	return redirect("/appt_book?appt_day=%s&appt_month=%s&appt_year=%s"%day,month,year)
+	#return render_template("appt_book.html", day=day, year=year, month=month)
 
 @app.route('/existing_user_login', methods=['GET'])
 def show_options_for_user():
@@ -89,7 +91,7 @@ def show_appt_book_to_owner():
 	month= time_now.month
 	year= time_now.year 
 
-
+	#return redirect("/appt_book?appt_day=%s&appt_month=%s&appt_year=%s")
 	return render_template("appt_book.html", day=day, year=year, month=month)
 
 @app.route('/login', methods=['POST'])
@@ -157,31 +159,45 @@ def owner_login_process():
 @app.route ('/appt_book', methods=['GET'])
 def show_appt_book():
 	"""This will take the pts name and show the appt book"""
-	first_name= request.args.get('first_name')
+	appt_day = request.args.get('appt_day')
+	appt_month = request.args.get('appt_month')
+	appt_year = request.args.get('appt_year')
+
+	print appt_year
+	print appt_month
+	print appt_day
+
+	# search_date = datetime(int(appt_year), int(appt_month), int(appt_day))
+	
 	# year="2016"
 	# month="August"
 	# day="1"
-	time_now= datetime.now()
-	td= timedelta(1)
+	#time_now= datetime.now()
+	# td= timedelta(1)
 
-	first_available_day = time_now + td 
-	weekdays= ['Monday','Tuesday','Wednesday','Thursday',]
-	for day in weekdays:
-		if day in weekdays:
-			first_available_day= time_now +td
-		else: 
-			first_available_day= time_now +timedelta(3)
-		#get a code review for the above!!
-	day=first_available_day.day
-	month=first_available_day.month
-	year=first_available_day.year
-	print day 
-	print month 
-	print year
-	appointments = {}
+	# first_available_day = time_now + td 
+	# weekdays= ['Monday','Tuesday','Wednesday','Thursday',]
+	# for day in weekdays:
+	# 	if day in weekdays:
+	# 		first_available_day= time_now +td
+	# 	else: 
+	# 		first_available_day= time_now +timedelta(3)
+	# 	#get a code review for the above!!
+	# day=first_available_day.day
+	# month=first_available_day.month
+	# year=first_available_day.year
 
-	return render_template ("appt_book.html", first_name=first_name, day=day, year=year, month=month)
+	# for u in Appointment.query.all():
+	# 	x = json.dumps(u.as_dict())
+	# 	print x
 
+	taken_appts=Appointment.query.filter_by(appt_date="%s/%s/%s"%(appt_month,appt_day,appt_year)).all()
+	taken_appts = Appointment.query.all()
+	new_list = [];
+	for item in taken_appts:
+		x = json.dumps(item.as_dict())
+		new_list.append(x)
+	return render_template ("appt_book.html", taken_appts=new_list, day=appt_day, year=appt_year, month=appt_month)
 
 @app.route ('/appt_book/<year>/<month>/<day>', methods=['POST'])
 def appt_book_view(year,month,day):
@@ -236,17 +252,19 @@ def show_scheduled_appts():
 @app.route ('/confirm_appt', methods=['POST'])
 def conf_appt():
 	""" Need to send user to another page after appt has been confirmed"""
+	provider_id=request.form.get('provider_id')
+	appt_time=request.form.get('appt_time')
 	day= request.form.get('day')
 	month= request.form.get('month')
 	year= request.form.get('year')
 	appt_date="%s/%s/%s"%(month,day,year)
 	user=session['user_id']
 	#this is how you you use something thats saved in a session! 
-	appt_time = request.form.get('appt_time')
-	provider_id, time = appt_time.split(", ")
-	# session['user_id']= user_id this didnt work!
-	
-	
+
+	# provider_id, time = appt_time.split(", ")
+	print provider_id
+	print appt_time 
+
 	patient = Patient.query.filter_by(user_id=user).first()
 	print patient
 	user_id =patient.user_id 
@@ -254,7 +272,7 @@ def conf_appt():
 	print appt_date
 	created_appt= create_new_appt(user_id=user_id,
 							appt_type_id=1,
-							appt_time=time,
+							appt_time=appt_time,
 							provider_id=provider_id,
 							appt_date=appt_date)
 	
@@ -262,8 +280,8 @@ def conf_appt():
 	db.session.commit()
 
 	appointments= Appointment.query.filter_by(user_id=user_id).all()
-
-	return render_template("confirmed.html",patient=patient,first_name=first_name,appointments=appointments)
+	return "Your appointment has been saved!"
+	# return render_template("confirmed.html",patient=patient,first_name=first_name,appointments=appointments)
 
 # TODO: Make /confirm_appt route for [get] - this shows all appointments for user
 

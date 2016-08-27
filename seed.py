@@ -33,6 +33,25 @@ def load_pts():
 			db.session.add(patient)
 			db.session.commit()
 
+def load_appts_for_schedule():
+	"""Load the pts appointments for the schedule to look full"""
+
+	with open('./seed_data/appts_for_schedule.tsv','r+') as data:
+		for i, row in enumerate(data):
+			row = row.rstrip()
+			appt_id, user_id, appt_time, appt_date, appt_type_id, provider_id = row.split ("\t")
+
+			appointment= Appointment(
+				appt_id=appt_id,
+				user_id=user_id,
+				appt_date=appt_date,
+				appt_time=appt_time,
+				appt_type_id=appt_type_id,
+				provider_id=provider_id)
+
+			db.session.add(appointment)
+			db.session.commit()
+
 def create_appointment():
 	"""To create the appointment"""
 	with open('./seed_data/appt_type.tsv','r+') as data:
@@ -73,6 +92,8 @@ if __name__ == '__main__':
 	create_appointment()
 
 	create_provider()
+
+	load_appts_for_schedule()
 
 # create_new_pt('ruba', 'hansan', '10101977', 6503012211, 'rubmnbhassan', '123456')
 # ruba = Patient.query.filter_by(first_name='ruba').first()
