@@ -20,6 +20,16 @@ class Patient(db.Model):
 
 	appointments = db.relationship("Appointment")
 
+# def example_patient():
+# 	patient = Patient(user_id=9999, first_name="Mickey",
+# 	last_name="Mouse", date_of_birth="01/05/2012",
+# 	cell_phone_number="4152157711", user_name="MickeyMouse",
+# 	password="123456") 
+
+# 	db.session.add(example_patient)
+#     db.session.commit()
+
+
 class BusinessOwner(db.Model):
 	"""Business owner info"""
 
@@ -31,6 +41,12 @@ class BusinessOwner(db.Model):
 	license_number = db.Column(db.String(64), nullable=False)
 	office_address = db.Column(db.String(500), nullable=False)
 	office_phone_number = db.Column(db.String(20), nullable=False)
+
+def example_business_owner():
+	business_owner = BusinessOwner(provider_id = 9191, first_name = "Ron",
+					last_name = "Jones", license_number ="12345",
+					office_address = "121 Sutter St. SF", office_phone_number ="4152153322")
+
 
 class Appointment(db.Model):
 	"""All Appointment info for my table"""

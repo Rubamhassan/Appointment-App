@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="well spaced" style="width:40%;">
+<div align="center" class="well spaced" style="width:40%;">
 <div>
 	<h1>New Patient Registration Form </h1>
 	<form action="/pregister" method="POST">
@@ -41,7 +41,7 @@
 <div>
 	<h1> Existing Patient Login</h1>
 	<form action="/login" method="POST">
-		<div class="existing_pt">
+		<div align= "center" class="existing_pt">
 			<label>User Name:
 				<input type="user_name" name="user_name" required class="existing_pt">
 			</label>
@@ -53,7 +53,11 @@
 		</div>
 		<input type="submit">
 	</form>
-
+</div>
+<br>
+<div align="right"> 
+	  <img style="border-radius:50px"src="/static/smile.jpg" height="350" width="100%"></img>
+</div>
 </div>
 {% endblock %}
 

@@ -1,153 +1,170 @@
-<!-- {% extends "base.html" %}
-{% block content %} -->
-<head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script type="text/javascript">
-var month= "{{month}}"
-var day= "{{day}}"
-var year="{{year}}"
-var taken_appts="{{taken_appts}}"
-</script>
-
-</head>
+{% extends "base.html" %}
+{% block content %}
+  <head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <script type="text/javascript">
+    var month= "{{month}}";
+    var day= "{{day}}";
+    var year="{{year}}";
+    var isDoctor = "{{isDoctor}}";
+    var taken_appts = [];
+    
+    // convert python 'list of dictionaries'
+    // to a JavaScript array of objects
+    {% for x in taken_appts %}
+      taken_appts.push({
+        appt_id: "{{ x.appt_id }}",
+        provider_id: "{{ x.provider_id }}",
+        user_id: "{{ x.user_id }}",
+        appt_time: "{{ x.appt_time }}", 
+        appt_type_id: "{{ x.appt_type_id }}",
+        appt_date: "{{ x.appt_date }}",
+        first_name: "{{x.first_name}}",
+        last_name: "{{x.last_name}}"
+      });
+    {% endfor %}
+  </script>
+  </head>
   <style>
     td,th {
-        text-align:center;
-        }
-
+      text-align:center;
+    }
   </style>
+
   <div>
-    {% for x in taken_appts %}
-      {{ x }}
-    {% endfor %}
   </div>
+
   <div align="center">
-  <span style="display:inline-block"> 
-    <button onclick="prev()"> Prev
-    </button>
-    <h1 id="displayDate">{{ month }} {{ day }} {{ year }}</h1>
-    <button onclick="next()"> Next
-    </button>
-  </span>
-  <h2>Bay Area Oral & Maxillofacial Surgery </h2>
-  <h3>450 Sutter Suite#1001</h3>
-  <h4>San Francisco Ca 94109</h4>
-  <h5>(415)771-2918</h5>
-             
-</div>
-<div class="row">
-  <div class="col-md-6">
-    <table class="table table-bordered">
-      <tr>
-        <th> 
-        Time
-        </th>
-        <th>
-        Dr. John
-        </th>
-        <!-- <th>
-        Dr.Steven
-        </th> -->
-      </tr>
-      <tr>
-        <td > 8:00</td>
-        <td onclick="cellClick(1,'8:00am')"> available</td>
-      </tr>
-      <tr>
-        <td> 9:00</td>
-        <td onclick="cellClick(1,'9:00am')"> available</td>
-      </tr>
-      <tr>
-        <td> 10:00</td>
-        <td onclick="cellClick(1,'10:00am')"> available</td>
-      </tr>
-      <tr>
-        <td> 11:00</td>
-        <td onclick="cellClick(1,'11:00am')"> available</td>
-      </tr>
-      <tr>
-        <td bgcolor="lightgrey"> 12:00</td>
-        <td bgcolor="lightgrey"> Lunch</td>
-      </tr>
-      <tr>
-        <td> 1:00</td>
-        <td onclick="cellClick(1,'1:00pm')"> available</td>
-      </tr>
-      <tr>
-        <td> 2:00</td>
-        <td onclick="cellClick(1,'2:00pm')"> available</td>
-      </tr>
-      <tr>
-        <td> 3:00</td>
-        <td onclick="cellClick(1,'3:00pm')"> available</td>
-      </tr>
-      <tr>
-        <td> 4:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 5:00</td>
-        <td> available</td>
-      </tr>
-    </table>
+    <div class="form-group" style="width:70%;display:inline-block">
+      <div class="col-md-4">
+        <a id="prev" href="#" style="margin-top:20px" class="btn btn-primary btn-block">Prev</a>
+      </div>
+      <div class="col-md-4">
+        <h1 id="displayDate">{{month}}/{{day}}/{{year}}</h1>
+        <!-- <p id="displayDate">{{month}}/{{day}}/{{year}}</p> -->
+      </div>
+      <div class="col-md-4">
+        <a id="next" href="#" style="margin-top:20px" class="btn btn-primary btn-block">Next</a>
+      </div>
+    </div>
+    <h2>Bay Area Oral &amp; Maxillofacial Surgery </h2>
+    <h3>450 Sutter Suite#1001</h3>
+    <h4>San Francisco Ca 94109</h4>
+    <h5>(415)771-2918</h5>           
   </div>
-  <div class="col-md-6">
-    <table class="table table-bordered">
-      <tr>
-        <th> 
-        Time
-        </th>
-        <th>
-        Dr. Steven
-        </th>
-        <!-- <th>
-        Dr.Steven
-        </th> -->
-      </tr>
-      <tr>
-        <td> 8:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 9:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 10:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 11:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td bgcolor="lightgrey"> 12:00</td>
-        <td bgcolor="lightgrey"> Lunch</td>
-      </tr>
-      <tr>
-        <td> 1:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 2:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 3:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 4:00</td>
-        <td> available</td>
-      </tr>
-      <tr>
-        <td> 5:00</td>
-        <td> available</td>
-      </tr>
-    </table>
+  <div class="container">
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <tr>
+          <th> 
+          Time
+          </th>
+          <th>
+          Dr. Hassan
+          </th>
+          <!-- <th>
+          Dr.Steven
+          </th> -->
+        </tr>
+        <tr>
+          <td > 8:00</td>
+          <td onclick="cellClick(1,'8:00am')" id="11"> available</td>
+        </tr>
+        <tr>
+          <td> 9:00</td>
+          <td onclick="cellClick(1,'9:00am')" id="12"> available</td>
+        </tr>
+        <tr>
+          <td> 10:00</td>
+          <td onclick="cellClick(1,'10:00am')" id="13"> available</td>
+        </tr>
+        <tr>
+          <td> 11:00</td>
+          <td onclick="cellClick(1,'11:00am')" id="14"> available</td>
+        </tr>
+        <tr>
+          <td> 12:00</td>
+          <td bgcolor="lightgrey"> Lunch</td>
+        </tr>
+        <tr>
+          <td> 1:00</td>
+          <td onclick="cellClick(1,'1:00pm')" id="15"> available</td>
+        </tr>
+        <tr>
+          <td> 2:00</td>
+          <td onclick="cellClick(1,'2:00pm')" id="16"> available</td>
+        </tr>
+        <tr>
+          <td> 3:00</td>
+          <td onclick="cellClick(1,'3:00pm')" id="17"> available</td>
+        </tr>
+        <tr>
+          <td> 4:00</td>
+          <td onclick="cellClick(1,'4:00pm')" id="18"> available</td>
+        </tr>
+        <tr>
+          <td> 5:00</td>
+          <td onclick="cellClick(1,'5:00pm')" id="19"> available</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-bordered">
+        <tr>
+          <th> 
+          Time
+          </th>
+          <th>
+          Dr. Baker
+          </th>
+          <!-- <th>
+          Dr.Steven
+          </th> -->
+        </tr>
+        <tr>
+          <td> 8:00</td>
+          <td onclick="cellClick(2,'8:00am')" id="21"> available</td>
+        </tr>
+        <tr>
+          <td> 9:00</td>
+          <td onclick="cellClick(2,'9:00am')" id="22"> available</td>
+        </tr>
+        <tr>
+          <td> 10:00</td>
+          <td onclick="cellClick(2,'10:00am')" id="23"> available</td>
+        </tr>
+        <tr>
+          <td> 11:00</td>
+          <td onclick="cellClick(2,'11:00am')" id="24"> available</td>
+        </tr>
+        <tr>
+          <td> 12:00</td>
+          <td bgcolor="lightgrey"> Lunch</td>
+        </tr>
+        <tr>
+          <td> 1:00</td>
+          <td onclick="cellClick(2,'1:00pm')" id="25"> available</td>
+        </tr>
+        <tr>
+          <td> 2:00</td>
+          <td onclick="cellClick(2,'2:00pm')" id="26"> available</td>
+        </tr>
+        <tr>
+          <td> 3:00</td>
+          <td onclick="cellClick(2,'3:00pm')" id="27"> available</td>
+        </tr>
+        <tr>
+          <td> 4:00</td>
+          <td onclick="cellClick(2,'4:00pm')" id="28"> available</td>
+        </tr>
+        <tr>
+          <td> 5:00</td>
+          <td onclick="cellClick(2,'5:00pm')" id="29"> available</td>
+        </tr>
+      </table>
+    </div>
   </div>
-</div>
-<script type="text/javascript" src="/static/appt_book.js"></script>
+  <script type="text/javascript" src="/static/appt_book.js"></script>
 
 
 <!-- <form action='/confirm_appt' method='POST'> -->

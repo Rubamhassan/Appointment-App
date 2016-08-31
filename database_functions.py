@@ -1,5 +1,5 @@
 from model import connect_to_db,db, Patient, BusinessOwner, Appointment, AppointmentType
-
+from datetime import datetime, timedelta
 
 def create_new_pt(first_name,
 				  last_name,
@@ -36,7 +36,10 @@ def create_appt_type(appt_type,cost):
 	return appt_type
 
 def create_new_owner(first_name,last_name,license_number,office_address,office_phone_number):
-	"""Saving New Business Owner Info"""
+	"""Saving New Business Owner Info
+
+	>>> create_new_owner('Mickey','Mouse','121212','420 sutter st','4152231212')
+	"""
 	new_owner = BusinessOwner(first_name=first_name,
 							last_name=last_name,
 							license_number=license_number,
@@ -46,7 +49,24 @@ def create_new_owner(first_name,last_name,license_number,office_address,office_p
 	db.session.commit()
 	return new_owner
 
+def next_aval_date():
+	"""returns the first available date for user
 
+		>>> type(next_aval_date())
+		<type 'tuple'>
+
+	"""
+	time_now= datetime.now()
+	td= timedelta(1)
+
+	first_available_day = time_now + td 
+	weekdays= ['Monday', 'Tuesday', 'Wednesday', 'Thursday']
+	for day in weekdays:
+		if day in weekdays:
+			first_available_day= time_now +td
+		else: 
+			first_available_day= time_now +timedelta(3)
+	return (first_available_day.day, first_available_day.month, first_available_day.year)
 
 
 

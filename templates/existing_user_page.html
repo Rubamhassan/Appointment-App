@@ -1,12 +1,33 @@
 {% extends "base.html" %}
 {% block content %}
-			
-			<h1>Welcome back {{ first_name }}!</h1> 
-			<h2>Please choose one of the following options:</h2>
+	<div align="center">
+	<h1>Welcome back {{ first_name }}!</h1> 
+	<h2>Please choose one of the following options:</h2>
 	
-	<a href="/appt_book"> <button type="button" class="btn-lg btn-primary"> Schedule your appointment</button></a>
+	<a id="apt_book" href="#"> <button type="button" class="btn-lg btn-primary"> Schedule your appointment</button></a>
 	<br>
 	<a href="/confirm_appt"> <button type="button" class="btn btn-lg btn-primary"> View scheduled appointments</button></a>
 	<br>
+<div align="right"> 
+	  <img style="border-radius:50px"src="/static/FD.jpg" height="500" width="100%"></img>
+</div>
+	<script>
+		var date = new Date();
+		date.setDate(date.getDate()+2);
+		// saturday
+		if(date.getDay() === 6){
+			date.setDate(date.getDate()+2);
+		}
+		// sunday
+		else if(date.getDay() === 0){
+			date.setDate(date.getDate()+1);
+		}
+		var link = 'appt_book?appt_year='
+			+date.getFullYear()+'&appt_month='
+			+(date.getMonth()+1)+'&appt_day='
+			+date.getDate();
+		document.getElementById('apt_book').setAttribute("href", link);
+	</script>
+	</div>
 
 {% endblock %}
