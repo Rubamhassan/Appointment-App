@@ -1,62 +1,98 @@
 {% extends 'base.html'%}
 {% block content %}
-<div class="well spaced" style="width: 40%">
-<div>
-	<h1>Provider Login</h1>
-	<form action="/owner_login" method="POST">
-
-		<div class="provider_login">
-			<label>First Name:
-				<input type="first_name" name="first_name" required class="provider_login">
-			</label>
+<div style="margin-top:40px;width:100%">
+	<div class="col-sm-6">
+		<div class="well spaced" style="width:100%">
+			<div>
+				<h1>Provider Login</h1>
+				<form action="/owner_login" method="POST">
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>First Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="first_name" name="first_name" required class="provider_login">
+						</div>												
+					</div>
+					<br><br>
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>Last Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="last_name" name="last_name" required class="provider_login">
+						</div>
+					</div>
+					<br><br>			
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>License Number:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="license_number" name="license_number" required class="provider_login">		
+						</div>				
+					</div>
+					<br><br>
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>Office Address:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="office_address" name="office_address" required class="provider_login">						
+						</div>
+					</div>
+					<br><br>
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>Office Phone:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="office_phone_number" name="office_phone_number" required class="provider_login">
+						</div>
+					</div>
+					<br><br>
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>Provider ID:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="provider_id" name="provider_id" required class="provider_login">
+						</div>
+					</div>
+					<br><br>
+					<input class="btn-sm" type="submit">
+				</form>
+			</div>
+			<div>
+				<h1> Existing Provider Login</h1>
+				<form action="/owner_login" method="POST">
+					<div class="existing_owner">
+						<div class="col-sm-4">
+							<label>User Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="user_name" name="user_name" required class="existing_owner">
+						</div>
+					</div>
+					<br><br>
+					<div class="existing_owner">
+						<div class="col-sm-4">
+							<label>Password:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="password" name="password" required class="existing_owner">
+						</div>						
+					</div>
+					<br><br>
+					<input class="btn-sm" type="submit">
+				</form>
+			</div>
 		</div>
-		<div class="provider_login">
-			<label>Last Name:
-				<input type="last_name" name="last_name" required class="provider_login">
-			</label>
+	</div>
+	<div class="col-sm-6">
+		<div align="right"> 
+			<img style="border-radius:50px"src="/static/dentaloffice.jpg" height="350" width="100%"></img>
 		</div>
-		<div class="provider_login">
-			<label>License Number:
-				<input type="license_number" name="license_number" required class="provider_login">
-			</label>
-		</div>
-		<div class="provider_login">
-			<label>Office Address:
-				<input type="office_address" name="office_address" required class="provider_login">
-			</label>
-		</div>
-		<div class="provider_login">
-			<label>Office Phone Number:
-				<input type="office_phone_number" name="office_phone_number" required class="provider_login">
-			</label>
-		</div>
-		<div class="provider_login">
-			<label>Provider ID:
-				<input type="provider_id" name="provider_id" required class="provider_login">
-			</label>
-		</div>
-		<input type="submit">
-	</form>
-</div>
-<div>
-	<h1> Existing Provider Login</h1>
-	<form action="/owner_login" method="POST">
-		<div class="existing_owner">
-			<label>User Name:
-				<input type="user_name" name="user_name" required class="existing_owner">
-			</label>
-		</div>
-		<div class="existing_owner">
-			<label>Password:
-				<input type="password" name="password" required class="existing_owner">
-			</label>
-		</div>
-		<input type="submit">
-	</form>
-
-</div>
-</div>
-<div align="right"> 
-	  <img style="border-radius:50px"src="/static/dentaloffice.jpg" height="350" width="100%"></img>
+	</div>
 </div>
 {% endblock %}

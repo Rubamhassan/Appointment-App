@@ -7,12 +7,10 @@ from model import connect_to_db, db, Patient,Appointment, AppointmentType, Busin
 from database_functions import create_new_pt, create_new_appt, create_appt_type, create_new_owner, next_aval_date
 from datetime import datetime,timedelta
 import json
+from twilio.rest import TwilioRestClient
 app = Flask(__name__)
 
 app.secret_key = "ABC"
-# source this later
-
-#this line is so jinja will show an error if a variable is used but undefined.
 app.jinja_env.undefined = StrictUndefined
 
 @app.route('/')
@@ -37,7 +35,6 @@ def login_process():
 	cell_phone_number = request.form.get("cell_phone_number")
 	user_name = request.form.get("user_name")
 	password = request.form.get("password")
-	# user_id= request.form["user_id"]
 
 
 	patient = create_new_pt(first_name=first_name, 
@@ -46,8 +43,6 @@ def login_process():
 							cell_phone_number=cell_phone_number, 
 							user_name=user_name,
 							password=password)
-
-	# session['first_name'] = first_name 
 
 	day, month, year = next_aval_date()
 
@@ -60,9 +55,6 @@ def show_options_for_user():
 	
 	user_name=request.args.get('user_name')
 	password= request.args.get('password')
-	
-	# session['user_name']= user_name
-	
 	patient= Patient.query.filter_by(user_name=user_name).first
 
 	return redirect('existing_user_page.html')
@@ -75,7 +67,6 @@ def show_appt_book_to_owner():
 	month= time_now.month
 	year= time_now.year
 
-	# don't we have to check for owner_credentials here ??
 	session['isDoctor'] = True
 
 	return redirect("/appt_book?appt_day=%s&appt_month=%s&appt_year=%s"%(day,month,year))
@@ -86,15 +77,8 @@ def show_appts_scheduled_for_this_pt():
 	
 	user_name= request.form.get('user_name')
 	password=request.form.get('password')
-	print user_name
 	patient = Patient.query.filter_by(user_name=user_name).first()
-	print patient
 	first_name = patient.first_name
-	
-	# patient_id= patient.user_id
-
-	# all_appts = Appointment.query.filter_by(user_id=patient_id).all()
-	# print all_appts
 
 	if patient.password == password:
 		user_id= patient.user_id
@@ -119,7 +103,7 @@ def owner_page():
 
 	return render_template("owner_login.html")
 
-# shouldn't this be 'owner_register' ??
+
 @app.route('/owner_login', methods=['POST'])
 def owner_login_process():
 	"""Process owner login"""
@@ -148,8 +132,6 @@ def owner_login_process():
 def show_appt_book():
 	"""This will take the pts name and show the appt book"""
 
-	# appt_day, appt_month and appt_year MUST be provided with the request
-	# app crashes otherwise
 	appt_day = request.args.get('appt_day')
 	appt_month = request.args.get('appt_month')
 	appt_year = request.args.get('appt_year')
@@ -159,37 +141,14 @@ def show_appt_book():
 		isDoctor = session['isDoctor']
 
 	search_date = "%s/%s/%s"%(appt_month,appt_day,appt_year)
-	print search_date
-	# this isn't working for some reason. Know why?
+
 	taken_appts=Appointment.query.filter_by(appt_date=search_date).join(Patient,Appointment.user_id==Patient.user_id).add_columns(Appointment.appt_id, Appointment.provider_id, Appointment.user_id, Appointment.appt_time, Appointment.appt_type_id, Appointment.appt_date, Patient.first_name, Patient.last_name).all()	
-	print taken_appts
-	# taken_appts = Appointment.query.join(Patient, Appointment.user_id==Patient.user_id).add_columns(Appointment.appt_id, Appointment.provider_id, Appointment.user_id, Appointment.appt_time, Appointment.appt_type_id, Appointment.appt_date, Patient.first_name, Patient.last_name).all()	
 	return render_template ("appt_book.html", taken_appts=taken_appts, day=appt_day,
 		year=appt_year, month=appt_month, isDoctor=isDoctor)
 
 @app.route ('/appt_book/<year>/<month>/<day>/<provider_id>/<timeslot>', methods=['POST'])
 def appt_book_view(year,month,day,provider_id,timeslot):
 	"""Appointment book view"""
-	# time_now= datetime.now()
-	# td= timedelta(1)
-	# first_name= request.args.form('first_name')
-	# print user_id
-	# first_available_day = time_now + td 
-	# weekdays= [Monday, Tuesday, Wednesday, Thursday,]
-	# for day in weekdays:
-	# 	if day in weekdays:
-	# 		first_available_day= time_now +td
-	# 	else: 
-	# 		first_available_day= time_now +timedelta(3)
-	# 	#get a code review for the above!!
-	# day=first_available_day.day
-	# month=first_available_day.month
-	# year=first_available_day.year
-	# print day 
-	# print month 
-	# print year
-	# appointments = {}
-	# session[first_available_day]= first_available_day
 
 	fullDate = str(month)+'/'+str(day)+'/'+str(year)
 
@@ -203,26 +162,16 @@ def appt_book_view(year,month,day,provider_id,timeslot):
 	print "Appointment saved"
 	return redirect('/confirm_appt')
 
-# @app.template_filter('MyCustomDateFormat') 
-# def format_date(appt_time):
-# 	"""Turn our date integer into a datetime object"""
-# 	#%d=monday %B=August %Y=Year
-# 	date = datetime.strptime(appt_time, "%I:%M%p")
-# 	output_format = "%B %d %Y" 
-
-# 	return datetime.strptime(date, output_format)
-
-
 
 @app.route ('/confirm_appt', methods=['GET'])
 def show_scheduled_appts():
 	""" Display page to show what is scheduled for this user"""
 	user_id= session['user_id']
 	patient = Patient.query.filter_by(user_id=user_id).first()
-	print patient
 	first_name = patient.first_name
 
-	appointments= Appointment.query.filter_by(user_id=user_id).all()	
+	appointments= Appointment.query.filter_by(user_id=user_id).all()
+	twilio(user_id)
 
 	return render_template("/confirmed.html",first_name=first_name,appointments=appointments)
 
@@ -236,17 +185,10 @@ def conf_appt():
 	year= request.form.get('year')
 	appt_date="%s/%s/%s"%(month,day,year)
 	user=session['user_id']
-	#this is how you you use something thats saved in a session! 
-
-	# provider_id, time = appt_time.split(", ")
-	print provider_id
-	print appt_time 
 
 	patient = Patient.query.filter_by(user_id=user).first()
-	print patient
 	user_id =patient.user_id 
 	first_name=patient.first_name
-	print appt_date
 	created_appt= create_new_appt(user_id=user_id,
 							appt_type_id=1,
 							appt_time=appt_time,
@@ -256,18 +198,37 @@ def conf_appt():
 
 	appointments= Appointment.query.filter_by(user_id=user_id).all()
 	return "Your appointment has been saved!"
-	# return render_template("confirmed.html",patient=patient,first_name=first_name,appointments=appointments)
 
-# TODO: Make /confirm_appt route for [get] - this shows all appointments for user
+# @app.route('/twilio/<int:user_id>', methods=['POST'])
+def twilio(user_id):
+
+
+	appointment= Appointment.query.get(user_id)
+	patient= Patient.query.get(user_id)
+	cell_phone_number= patient.cell_phone_number
+	print cell_phone_number
+	body = "Hello "+(patient.first_name)+" We look forward to seeing you on "+(appointment.appt_date)+"at "+(appointment.appt_time)
+
+
+	account_sid = "AC38e1b6d5cc02a5b6eb36e4c446693f57"
+	auth_token = "1d21cdeed73e33a78fe10a8103024972 "
+	client = TwilioRestClient(account_sid, auth_token)
+
+	message = client.messages.create(to=cell_phone_number, from_="+16506845238",
+									body=body)
+	flash("Your message was sent successfully.")
+	return redirect("/confirmed.html") 
+
+
 
 if __name__ == "__main__":
 	
-    # app.debug = True
+    app.debug = True
 
     connect_to_db(app)
 
     # Use the DebugToolbar
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
 
     app.run(host='0.0.0.0')
 

@@ -20,21 +20,21 @@ class Patient(db.Model):
 
 	appointments = db.relationship("Appointment")
 
-# def example_patient():
-# 	patient = Patient(user_id=9999, first_name="Mickey",
-# 	last_name="Mouse", date_of_birth="01/05/2012",
-# 	cell_phone_number="4152157711", user_name="MickeyMouse",
-# 	password="123456") 
+def example_patient():
+	patient = Patient(user_id=9999, first_name="Mickey",
+					last_name="Mouse", date_of_birth="01/05/2012",
+					cell_phone_number="4152157711", user_name="MickeyMouse",
+ 					password="123456") 
 
-# 	db.session.add(example_patient)
-#     db.session.commit()
+	db.session.add(example_patient)
+	db.session.commit()
 
 
 class BusinessOwner(db.Model):
 	"""Business owner info"""
 
 	__tablename__ = "business_owner"
-#need to make provider ID autoincremenet=True
+
 	provider_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
 	first_name = db.Column(db.String(64), nullable=False)
 	last_name = db.Column(db.String(64), nullable=False)
@@ -67,7 +67,6 @@ class AppointmentType(db.Model):
 	"""Two different appointment types"""
 
 	__tablename__ = "appointment_type"
- #do we need to make this autoincrement?
 	appt_type_id = db.Column(db.Integer, primary_key=True)
 	appt_type = db.Column(db.String, nullable=False)
 	cost = db.Column(db.Integer, nullable=False)

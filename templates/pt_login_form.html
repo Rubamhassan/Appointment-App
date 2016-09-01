@@ -1,64 +1,102 @@
-{% extends 'base.html' %}
+{% extends 'base.html'%}
 {% block content %}
-<div align="center" class="well spaced" style="width:40%;">
-<div>
-	<h1>New Patient Registration Form </h1>
-	<form action="/pregister" method="POST">
-
-		<div class="new_pt">
-			<label> First Name:
-				<input type="first_name" name="first_name" required class="new_pt">
-			</label>
+<div style="margin-top:40px;width:100%">
+	<div class="col-sm-6">
+		<div class="well spaced" style="width:100%">
+			<div>
+				<h1>New Patient Registration Form</h1>
+				<form action="/pregister" method="POST">
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>First Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="first_name" name="first_name" required class="new_pt">
+						</div>												
+					</div>
+					<br><br>
+					<div class="provider_login">
+						<div class="col-sm-4">
+							<label>Last Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="last_name" name="last_name" required class="new_pt">
+						</div>
+					</div>
+					<br><br>			
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>Date of Birth:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="date_of_birth" name="date_of_birth" required class="new_pt">		
+						</div>				
+					</div>
+					<br><br>
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>Cell Phone Number:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="cell_phone_number" name="cell_phone_number" required class="new_pt">						
+						</div>
+					</div>
+					<br><br>
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>User Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="user_name" type="user_name" name="user_name" required class="new_pt">
+						</div>
+					</div>
+					<br><br>
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>Password:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="password" name="password" required class="new_pt">
+						</div>
+					</div>
+					<br><br>
+					<input class="btn-sm" type="submit">
+				</form>
+			</div>
+			<div>
+				<h1> Existing Patient Login</h1>
+				<form action="/login" method="POST">
+					<div class="new_pt">
+						<div class="col-sm-4">
+							<label>User Name:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="user_name" name="user_name" required class="new_pt">
+						</div>
+					</div>
+					<br><br>
+					<div class="existing_owner">
+						<div class="col-sm-4">
+							<label>Password:</label>
+						</div>
+						<div class="col-sm-8">
+							<input class="form-control" type="password" name="password" required class="new_pt">
+						</div>						
+					</div>
+					<br><br>
+					<input class="btn-sm" type="submit">
+				</form>
+			</div>
 		</div>
-		<div class="new_pt">
-			<label> Last Name:
-				<input type="last_name" name="last_name" required class="new_pt">
-			</label>
+	</div>
+	<div class="col-sm-6">
+		<div align="right"> 
+			<img style="border-radius:50px"src="/static/smile.jpg" height="350" width="100%"></img>
 		</div>
-		<div class="new_pt">
-			<label> Date Of Birth:
-				<input type="date_of_birth" name="date_of_birth" required class="date_of_birth">
-			</label>
-		</div>
-		<div class="new_pt">
-			<label> Cell Phone Number:
-				<input type="cell_phone_number" name="cell_phone_number" required class="cell_phone_number">
-			</label>
-		</div>
-		<div class="new_pt">
-			<label> User Name:
-				<input type="user_name" name="user_name" required class="user_name">
-			</label>
-		</div>
-		<div class="new_pt">
-			<label> Password:
-				<input type="password" name="password" required class="password">
-			</label>
-		</div>
-		<input type="submit">
-	</form>
-</div>
-<div>
-	<h1> Existing Patient Login</h1>
-	<form action="/login" method="POST">
-		<div align= "center" class="existing_pt">
-			<label>User Name:
-				<input type="user_name" name="user_name" required class="existing_pt">
-			</label>
-		</div>
-		<div class="existing_pt">
-			<label>Password:
-				<input type="password" name="password" required class="existing_pt">
-			</label>
-		</div>
-		<input type="submit">
-	</form>
-</div>
-<br>
-<div align="right"> 
-	  <img style="border-radius:50px"src="/static/smile.jpg" height="350" width="100%"></img>
-</div>
+	</div>
 </div>
 {% endblock %}
+
+
 
 

@@ -8,9 +8,7 @@
     var year="{{year}}";
     var isDoctor = "{{isDoctor}}";
     var taken_appts = [];
-    
-    // convert python 'list of dictionaries'
-    // to a JavaScript array of objects
+
     {% for x in taken_appts %}
       taken_appts.push({
         appt_id: "{{ x.appt_id }}",
@@ -41,7 +39,6 @@
       </div>
       <div class="col-md-4">
         <h1 id="displayDate">{{month}}/{{day}}/{{year}}</h1>
-        <!-- <p id="displayDate">{{month}}/{{day}}/{{year}}</p> -->
       </div>
       <div class="col-md-4">
         <a id="next" href="#" style="margin-top:20px" class="btn btn-primary btn-block">Next</a>
@@ -62,9 +59,7 @@
           <th>
           Dr. Hassan
           </th>
-          <!-- <th>
-          Dr.Steven
-          </th> -->
+
         </tr>
         <tr>
           <td > 8:00</td>
@@ -117,9 +112,6 @@
           <th>
           Dr. Baker
           </th>
-          <!-- <th>
-          Dr.Steven
-          </th> -->
         </tr>
         <tr>
           <td> 8:00</td>
@@ -167,71 +159,6 @@
   <script type="text/javascript" src="/static/appt_book.js"></script>
 
 
-<!-- <form action='/confirm_appt' method='POST'> -->
-  <!-- <h1>{{ month }} {{ day }} {{ year }}</h1>
-  <h2>Bay Area Oral & Maxillofacial Surgery </h2>
-  <h3>450 Sutter Suite#1001</h3>
-  <h4>San Francisco Ca 94109</h4>
-  <h5>(415)771-2918</h5>
-             <h6>Please select your appointment time:</h6>
-             <h7>Appointments for Dr. John</h7> -->
-  <!-- <table class="table table-striped">
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 8:00am'> 8:00am</input>
-  <br> 
-  <input type='radio' name= 'appt_time' value='1, 9:00am'> 9:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 10:00am'> 10:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 11:00am'> 11:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 1:00pm'> 1:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 2:00pm'> 2:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 3:00pm'> 3:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 4:00pm'> 4:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='1, 5:00pm'> 5:00pm</input>
-  <br>
-  <div class="hidden">
-  <select name="month">
-      <option value="{{month}}">{{month}}</option>
-  </select>
-  <select name="day">
-      <option value="{{day}}">{{day}}</option>
-  </select>
-  <select name="year">
-      <option value="{{year}}">{{year}}</option>
-  </select>
-  </div>
-  <input type="submit" class="textbox">
-  <br>
-  </table>
-   
-  <h8>Appointments for Dr. Steven </h8>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 8:00am'> 8:00am</input>
-  <br> 
-  <input type='radio' name= 'appt_time' value='2, 9:00am'> 9:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 10:00am'> 10:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 11:00am'> 11:00am</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 1:00pm'> 1:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 2:00pm'> 2:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 3:00pm'> 3:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 4:00pm'> 4:00pm</input>
-  <br>
-  <input type='radio' name= 'appt_time' value='2, 5:00pm'> 5:00pm</input>
-  <br>
-  <div class="hidden">
-  <select name="month">
       <option value="{{month}}">{{month}}</option>
   </select>
   <select name="day">

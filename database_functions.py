@@ -35,11 +35,9 @@ def create_appt_type(appt_type,cost):
 	db.session.commit()
 	return appt_type
 
-def create_new_owner(first_name,last_name,license_number,office_address,office_phone_number):
-	"""Saving New Business Owner Info
 
-	>>> create_new_owner('Mickey','Mouse','121212','420 sutter st','4152231212')
-	"""
+def create_new_owner(first_name,last_name,license_number,office_address,office_phone_number):
+	"""This is to create a new owner"""
 	new_owner = BusinessOwner(first_name=first_name,
 							last_name=last_name,
 							license_number=license_number,
