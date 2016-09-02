@@ -95,7 +95,7 @@ def show_appts_scheduled_for_this_pt():
 def show_review_page():
 	"""Display reviews page"""
 
-	return render_template("eviews.html")
+	return render_template("reviews.html")
 
 @app.route('/owner_login', methods=['GET'])
 def owner_page():
