@@ -23,6 +23,21 @@
     td,th {
       text-align:center;
     }
+    .table {
+      border:5px solid gray;
+    }
+    tr, th, td {
+      border:3px solid gray;
+    }
+    td {
+      font-weight: bold;
+    }
+    th {
+      font-size:20px;
+    }
+    td {
+      font-size:15px
+    }
   </style>
 {% endblock %}
 {% block content %}
@@ -48,7 +63,7 @@
   </div>
   <div class="container">
     <div class="col-md-6">
-      <table class="table table-bordered">
+      <table class="table table-bordered" class="border">
         <tr>
           <th> 
           Time
@@ -101,7 +116,7 @@
       </table>
     </div>
     <div class="col-md-6">
-      <table class="table table-bordered">
+      <table class="table table-bordered" >
         <tr>
           <th> 
           Time
