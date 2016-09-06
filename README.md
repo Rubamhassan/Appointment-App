@@ -1,6 +1,6 @@
 ## Synopsis
   
-Appointment Scheduler is an app that allows new and existing patients to log in and schedule an appointment with their doctor based on what times and dates are available. Which can maximize the office production by giving the patient the opportunity to schedule when they are ready and need the appointment. With the calendar set up with datetime, It will show real time dates and only allow the user to schedule two business days in advance from when they sign in.  My calendar has the benifit of having two views, one for the doctor and one for the patient.The doctor also has the benefit to see what and who is scheduled anytime and can access the app remotely. 
+Appointment Scheduler is an app that allows new and existing patients to log in and schedule an appointment based on available times and dates. This can maximize the office production as it gives the patients the (freedom) opportunity to schedule their appointments when they are able to and at the time that is convenient for them. The calendar set-up with datetime shows real time dates and only allows the user to schedule two business days in advance. My calendar has the benefit of having two views: one for the patient and one for the doctor. The doctor has the added benefit of seeing who has scheduled an appointment at any time, both in the office and remotely.
 
 ![homepage](/static/homepage.jpeg?raw=true "Homepage")
 
