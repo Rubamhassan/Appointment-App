@@ -20,7 +20,7 @@ Provider Log in page:
 ![Provider log in page](/static/providerloginpage.jpeg?raw=true "Provider Log in page")
 
 Schedule view for the doctor:
-![schedule view for the doctor](/static/drsviewofschedule.jpeg?raw=true "Schedule view for the doctor")
+![schedule view for the doctor](/static/doctorsview.jpeg?raw=true "Schedule view for the doctor")
 
 
 ## Installation
