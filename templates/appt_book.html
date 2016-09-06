@@ -1,14 +1,11 @@
 {% extends "base.html" %}
-{% block content %}
-  <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+{% block head %}
   <script type="text/javascript">
     var month= "{{month}}";
     var day= "{{day}}";
     var year="{{year}}";
     var isDoctor = "{{isDoctor}}";
     var taken_appts = [];
-
     {% for x in taken_appts %}
       taken_appts.push({
         appt_id: "{{ x.appt_id }}",
@@ -22,13 +19,13 @@
       });
     {% endfor %}
   </script>
-  </head>
   <style>
     td,th {
       text-align:center;
     }
   </style>
-
+{% endblock %}
+{% block content %}
   <div>
   </div>
 
@@ -169,6 +166,6 @@
   </select>
   </div>
   <input type="submit" class="textbox">
-</form> -->
+</form>
 
 {% endblock %}
